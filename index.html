@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>సిద్ది రామ్ రెడ్డి రైస్ మిల్లు లెక్క</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans Telugu', Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2e7d32;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        label {
+            font-size: 15px;
+            color: #333;
+            flex: 1;
+        }
+        
+        input[type="number"] {
+            width: 100px;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            text-align: center;
+        }
+        
+        input[type="number"]:focus {
+            border-color: #2e7d32;
+        }
+        
+        .result {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .result label {
+            flex: 1;
+        }
+        
+        .result strong {
+            color: #000;
+            min-width: 100px;
+            text-align: right;
+            font-size: 16px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        
+        .calculate-btn {
+            background-color: #2e7d32;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #1b5e20;
+        }
+        
+        .reset-btn {
+            background-color: #00897b;
+        }
+        
+        .reset-btn:hover {
+            background-color: #00695c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>సిద్ది రామ్ రెడ్డి రైస్ మిల్లు లెక్క</h1>
+        
+        <div class="input-group">
+            <label>తీసుకున్న బస్తాలు :</label> <input type="number" id="quantityBags" min="0">
+        </div>
+        
+        <div class="result">
+            <label>బస్తాల పైసలు : <strong id="bagsAmount">0</strong></label>
+        </div>
+        
+        <div class="input-group">
+            <label>అమ్మిన నూకలు :</label>
+            <input type="number" id="soldNukalu" min="0">
+        </div>
+        
+        <div class="result">
+            <label>నూకల పైసలు : <strong id="nukaluAmount">0</strong></label>
+        </div>
+        
+        <div class="result">
+            <label>బస్తాలు పోను నూకల పైసలు : <strong id="remainingNukalu">0</strong></label>
+        </div>
+        
+        <div class="input-group">
+            <label>బియ్యం బస్తాలు :</label>
+            <input type="number" id="biyyamBags" min="0">
+        </div>
+        
+        <div class="result">
+            <label>కీరాయి పైసలు: <strong id="keerayiAmount">0</strong></label>
+        </div>
+        
+        <div class="result">
+            <label>మొత్తం : <strong id="total">0</strong></label>
+        </div>
+        
+        <div class="buttons">
+            <button class="reset-btn" onclick="resetForm()">లెక్క ఎంత ?</button>
+            <button class="calculate-btn" onclick="calculate()">క్లియర్ చేయ్</button>
+        </div>
+    </div>
+    
+    <script>
+        // ధరలు
+        const QUANTITY_BAG_PRICE = 16; // క్వాంటిటీ బస్తా ధర
+        const NUKALU_PRICE = 12; // నూకల కిలో ధర (12 రూపాయలు)
+        const BIYYAM_BAG_PRICE = 50; // బియ్యం బస్తా ధర
+        
+        function calculate() {
+            // ఇన్‌పుట్ విలువలు
+            const quantityBags = parseFloat(document.getElementById('quantityBags').value) || 0;
+            const soldNukalu = parseFloat(document.getElementById('soldNukalu').value) || 0;
+            const biyyamBags = parseFloat(document.getElementById('biyyamBags').value) || 0;
+            
+            // లెక్కలు
+            const bagsAmount = quantityBags * QUANTITY_BAG_PRICE;
+            const nukaluAmount = soldNukalu * NUKALU_PRICE;
+            const remainingNukalu = nukaluAmount - bagsAmount;
+            const keerayiAmount = biyyamBags * BIYYAM_BAG_PRICE;
+            const total = remainingNukalu + keerayiAmount;
+            
+            // ఫలితాలు చూపించడం
+            document.getElementById('bagsAmount').textContent = bagsAmount;
+            document.getElementById('nukaluAmount').textContent = nukaluAmount;
+            document.getElementById('remainingNukalu').textContent = remainingNukalu;
+            document.getElementById('keerayiAmount').textContent = keerayiAmount;
+            document.getElementById('total').textContent = total;
+        }
+        
+        function resetForm() {
+            document.getElementById('quantityBags').value = '';
+            document.getElementById('soldNukalu').value = '';
+            document.getElementById('biyyamBags').value = '';
+            document.getElementById('bagsAmount').textContent = '0';
+            document.getElementById('nukaluAmount').textContent = '0';
+            document.getElementById('remainingNukalu').textContent = '0';
+            document.getElementById('keerayiAmount').textContent = '0';
+            document.getElementById('total').textContent = '0';
+        }
+        
+        // ఇన్‌పుట్ మారినప్పుడు ఆటోమేటిక్‌గా లెక్కించడం
+        document.getElementById('quantityBags').addEventListener('input', calculate);
+        document.getElementById('soldNukalu').addEventListener('input', calculate);
+        document.getElementById('biyyamBags').addEventListener('input', calculate);
+    </script>
+</body>
+</html>
